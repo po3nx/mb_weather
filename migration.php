@@ -15,6 +15,8 @@ $capsule->bootEloquent();
 
 Capsule::schema()->create('weather', function ($table) {
     $table->increments('id');
+    $table->string('lat');
+    $table->string('lon');
     $table->datetime('time');
     $table->integer('snowfraction');
     $table->float('windspeed');
