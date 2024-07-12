@@ -323,8 +323,8 @@ echo "<body style=\"font-family: Arial, Helvetica, sans-serif;font-size:11pt;col
             <th style=\"padding: 5px; border: 1px solid #ddd;\">Humidity</th>
         </tr></thead><tbody>";
 $index = 0;
-foreach($this->data['data_1h']['time'] as $key => $date){
-    $windDirection = $this->data['data_1h']['winddirection'][$key];
+foreach($this->data as $row){
+    $windDirection = $row->winddirection;
     $style = ($index % 2 ==0 )?'style="background-color: #f9f9f9; text-align: center;"':'style="background-color: #f1f1f1; text-align: center;"';
     $directions = [ 'N' => [348.75, 11.25],'NNE' => [11.25, 33.75],'NE' => [33.75, 56.25],'ENE' => [56.25, 78.75],'E' => [78.75, 101.25],'ESE' => [101.25, 123.75],'SE' => [123.75, 146.25],'SSE' => [146.25, 168.75],'S' => [168.75, 191.25],'SSW' => [191.25, 213.75],'SW' => [213.75, 236.25],'WSW' => [236.25, 258.75],'W' => [258.75, 281.25],'WNW' => [281.25, 303.75],'NW' => [303.75, 326.25],'NNW' => [326.25, 348.75] ];
     foreach ($directions as $dir => $range) {
@@ -333,22 +333,24 @@ foreach($this->data['data_1h']['time'] as $key => $date){
             break;
         }
     }
-    $date = date('H:i', strtotime($date));
+    $date = date('H:i', strtotime($row->time));
     if ($index>=24){
         exit;
     }
-    $rainspot = generateRainspotTable($this->data['data_1h']['rainspot'][$key]);
+    $rainspot = generateRainspotTable($row->rainspot);
+    $windspeed = round($row->windspeed,2);
+    $temperature = round($row->temperature,2);
     echo "<tr>
             <td {$style}>{$date}</td>
-            <td {$style}><img src='images/png/".substr("00".$this->data['data_1h']['pictocode'][$key],-2).($this->data['data_1h']['isdaylight'][$key]=='1'?"_day":"_night").".png' width='40' alt='{$this->data['data_1h']['pictocode'][$key]}'></td>
+            <td {$style}><img src='images/png/".substr("00".$row->pictocode,-2).($row->isdaylight=='1'?"_day":"_night").".png' width='40' alt='{$row->pictocode}'></td>
             <td {$style}>{$img}</td>
             <td {$style}>{$rainspot}</td>
-            <td {$style}>{$this->data['data_1h']['windspeed'][$key]}</td>
-            <td {$style}>{$this->data['data_1h']['temperature'][$key]} °C</td>
-            <td {$style}>{$this->data['data_1h']['precipitation'][$key]}</td>
-            <td {$style}>{$this->data['data_1h']['precipitation_probability'][$key]} %</td>
-            <td {$style}>{$this->data['data_1h']['uvindex'][$key]}</td>
-            <td {$style}>{$this->data['data_1h']['relativehumidity'][$key]}</td>
+            <td {$style}>{$windspeed}</td>
+            <td {$style}>{$temperature} °C</td>
+            <td {$style}>{$row->precipitation}</td>
+            <td {$style}>{$row->precipitation_probability} %</td>
+            <td {$style}>{$row->uvindex}</td>
+            <td {$style}>{$row->relativehumidity}</td>
         </tr>";
     $index++;
 }
