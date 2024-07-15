@@ -82,4 +82,4 @@ Contributions are welcome! Please follow these steps to contribute:
 Please read the Meteoblue documentation at https://docs.meteoblue.com/en/weather-apis/introduction/overview
 
 ## Sample Output
-![image description](public/images/forecast_output.png)
+![image description](images/forecast_output.png)
