@@ -56,7 +56,7 @@ Follow these steps to get the project up and running on your local machine.
     You can start the PHP built-in web server by running:
 
     ```sh
-    php -S localhost:8000 -t public
+    php -S localhost:8000 
     ```
 
 2. **View the application:**
