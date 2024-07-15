@@ -12,7 +12,7 @@ This project is a PHP application that retrieves weather forecast data from the 
 
 Before you begin, ensure you have met the following requirements:
 
-- PHP 7.4 or higher installed on your machine.
+- PHP 8.1 or higher installed on your machine.
 - Composer installed for managing dependencies.
 - An API key from [Meteoblue](https://www.meteoblue.com/en/weather-api/index/overview).
 
