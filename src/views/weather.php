@@ -340,6 +340,7 @@ foreach($this->data as $row){
     $rainspot = generateRainspotTable($row->rainspot);
     $windspeed = round($row->windspeed,2);
     $temperature = round($row->temperature,2);
+    $precipitation = round($row->precipitation,2);
     echo "<tr>
             <td {$style}>{$date}</td>
             <td {$style}><img src='images/png/".substr("00".$row->pictocode,-2).($row->isdaylight=='1'?"_day":"_night").".png' width='40' alt='{$row->pictocode}'></td>
@@ -347,7 +348,7 @@ foreach($this->data as $row){
             <td {$style}>{$rainspot}</td>
             <td {$style}>{$windspeed}</td>
             <td {$style}>{$temperature} °C</td>
-            <td {$style}>{$row->precipitation}</td>
+            <td {$style}>{$precipitation}</td>
             <td {$style}>{$row->precipitation_probability} %</td>
             <td {$style}>{$row->uvindex}</td>
             <td {$style}>{$row->relativehumidity}</td>
