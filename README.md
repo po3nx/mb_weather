@@ -48,6 +48,15 @@ Follow these steps to get the project up and running on your local machine.
     DB_PASSWORD=your_database_password
 
     ```
+    
+3. **Database Migration:**
+
+    Run the migration script to create the table in your database:
+
+    ```sh
+    php migration.php
+    ```
+
 
 ### Usage
 
@@ -58,8 +67,11 @@ Follow these steps to get the project up and running on your local machine.
     ```sh
     php -S localhost:8000 
     ```
+2. **Synchronize the data:**
 
-2. **View the application:**
+    Open your web browser and navigate to http://localhost:8000/sync. Wait for the synchronization process to complete. If the process is successful, a success status will be displayed; otherwise, a failure status will be shown.
+
+3. **View the data:**
 
     Open your web browser and navigate to `http://localhost:8000` to see the weather forecast interface.
 
