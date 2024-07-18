@@ -72,9 +72,9 @@
 }
 
 .rainspot {
-    height:30px;
+    height:40px;
     padding: 0;
-    width: 30px
+    width: 40px
 }
 
 .rainspot .spot-table {
@@ -273,11 +273,7 @@
 .rainspot-explain .grid-rainspot .grid-rainspot-text .precipitation-intensity-explain .heavy-rain {
     fill: #2575ba
 }
-table { font-family: Arial, Helvetica, sans-serif; font-size: 10pt; margin: 10px auto; border-collapse: collapse; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
-th, td { padding: 5px 0px; text-align: center; font-size:8pt;}
-th { background-color: #2C8F30; color: white; }
-.odd { background-color: #f9f9f9; }
-.even { background-color: #f1f1f1; }
+
 </style>
 </head>
 <?php
@@ -311,83 +307,53 @@ function generateRainspotTable($data) {
 
     return $html;
 }
-function getWindDirectionImage($windDirection) {
-    $directions = [
-        'N' => [348.75, 11.25], 'NNE' => [11.25, 33.75], 'NE' => [33.75, 56.25], 'ENE' => [56.25, 78.75],
-        'E' => [78.75, 101.25], 'ESE' => [101.25, 123.75], 'SE' => [123.75, 146.25], 'SSE' => [146.25, 168.75],
-        'S' => [168.75, 191.25], 'SSW' => [191.25, 213.75], 'SW' => [213.75, 236.25], 'WSW' => [236.25, 258.75],
-        'W' => [258.75, 281.25], 'WNW' => [281.25, 303.75], 'NW' => [303.75, 326.25], 'NNW' => [326.25, 348.75]
-    ];
+echo "<body style=\"font-family: Arial, Helvetica, sans-serif;font-size:11pt;color:#1F497D;\" >
+    <table style=\"font-family: Arial, Helvetica, sans-serif;font-size:10pt;margin: 10px auto; border-collapse: collapse; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);\">
+        <thead><tr><td colspan='9'><div style=\"margin: 10px auto; font-weight:bold\">Weather forcast for {$this->lat} {$this->lon}</div></td></tr>
+        <tr style=\"background-color: #2C8F30; color: white; text-align: center;\">
+            <th style=\"padding: 5px; border: 1px solid #ddd;\">Time</th>
+            <th style=\"padding: 5px; border: 1px solid #ddd;\">Weather</th>
+            <th style=\"padding: 5px; border: 1px solid #ddd;\">Wind Direction</th>
+            <th style=\"padding: 5px; border: 1px solid #ddd;\">Rain Spot</th>
+            <th style=\"padding: 5px; border: 1px solid #ddd;\">Wind Speed</th>
+            <th style=\"padding: 5px; border: 1px solid #ddd;\">Temperature</th>
+            <th style=\"padding: 5px; border: 1px solid #ddd;\">Precipitation</th>
+            <th style=\"padding: 5px; border: 1px solid #ddd;\">Precipitation Prob</th>
+            <th style=\"padding: 5px; border: 1px solid #ddd;\">UV Index</th>
+            <th style=\"padding: 5px; border: 1px solid #ddd;\">Humidity</th>
+        </tr></thead><tbody>";
+$index = 0;
+foreach($this->data as $row){
+    $windDirection = $row->winddirection;
+    $style = ($index % 2 ==0 )?'style="background-color: #f9f9f9; text-align: center;"':'style="background-color: #f1f1f1; text-align: center;"';
+    $directions = [ 'N' => [348.75, 11.25],'NNE' => [11.25, 33.75],'NE' => [33.75, 56.25],'ENE' => [56.25, 78.75],'E' => [78.75, 101.25],'ESE' => [101.25, 123.75],'SE' => [123.75, 146.25],'SSE' => [146.25, 168.75],'S' => [168.75, 191.25],'SSW' => [191.25, 213.75],'SW' => [213.75, 236.25],'WSW' => [236.25, 258.75],'W' => [258.75, 281.25],'WNW' => [281.25, 303.75],'NW' => [303.75, 326.25],'NNW' => [326.25, 348.75] ];
     foreach ($directions as $dir => $range) {
         if (($windDirection >= $range[0] && $windDirection < $range[1]) || ($range[0] > $range[1] && ($windDirection >= $range[0] || $windDirection < $range[1]))) {
-            return "<img src='images/windir/{$dir}.png' alt='{$dir}'>";
+            $img = "<img src='images/windir/{$dir}.png' alt='{$dir}'>";
+            break;
         }
     }
-    return '';
-}
-$fields = [
-    ['field'=>'pictocode','title'=>'Weather Condition'], 
-    ['field'=>'precipitation','title'=>'Precipitation (mm)'],
-    ['field'=>'precipitation_probability','title'=>'Precipitation Prob (%)'],
-    ['field'=>'rainspot','title'=>'Rain Spot'],
-    ['field'=>'temperature','title'=>'Temperature (°C)'],
-    ['field'=>'uvindex','title'=>'UV Index'], 
-    ['field'=>'relativehumidity','title'=>'Relative Humidity (%)'],
-    ['field'=>'winddirection','title'=>'Wind Direction'],
-    ['field'=>'windspeed','title'=>'Wind Speed (km/h)']
-];
-echo "<body>
-    <table>
-        <thead>
-            <tr><td colspan='25'><div style='font-weight: bold;'>Weather forecast for {$this->lat} {$this->lon}</div></td></tr>
-            <tr>
-                <th></th>";
-
-                foreach ($this->data as $row) {
-                    echo "<th>" . date('H:i', strtotime($row->time)) . "</th>";
-                }
-
-echo "      </tr>
-        </thead>
-        <tbody>";
-$index = 0;
-foreach ($fields as $field) {
-    $styleClass = ($index % 2 == 0) ? 'odd' : 'even';
-    echo "<tr><td class='{$styleClass}'>{$field['title']}</td>";
-
-    foreach ($this->data as $row) {
-        $disp = '';
-
-        switch ($field['field']) {
-            case 'pictocode':
-                $disp = "<img src='images/png/" . substr("00" . $row->pictocode, -2) . ($row->isdaylight == '1' ? "_day" : "_night") . ".png' width='30' alt='{$row->pictocode}'>";
-                break;
-            case 'winddirection':
-                $disp = getWindDirectionImage($row->winddirection);
-                break;
-            case 'rainspot':
-                $disp = generateRainspotTable($row->rainspot);
-                break;
-            case 'windspeed':
-                $disp = round($row->windspeed, 0);
-                break;
-            case 'temperature':
-                $disp = round($row->temperature, 0) . "°";
-                break;
-            case 'precipitation':
-                $disp = round($row->precipitation, 0);
-                break;
-            default:
-                $disp = $row[$field['field']];
-                break;
-        }
-
-        echo "<td class='{$styleClass}'>{$disp}</td>";
+    $date = date('H:i', strtotime($row->time));
+    if ($index>=24){
+        exit;
     }
-
-    echo "</tr>";
+    $rainspot = generateRainspotTable($row->rainspot);
+    $windspeed = round($row->windspeed,2);
+    $temperature = round($row->temperature,2);
+    $precipitation = round($row->precipitation,2);
+    echo "<tr>
+            <td {$style}>{$date}</td>
+            <td {$style}><img src='images/png/".substr("00".$row->pictocode,-2).($row->isdaylight=='1'?"_day":"_night").".png' width='40' alt='{$row->pictocode}'></td>
+            <td {$style}>{$img}</td>
+            <td {$style}>{$rainspot}</td>
+            <td {$style}>{$windspeed}</td>
+            <td {$style}>{$temperature} °C</td>
+            <td {$style}>{$precipitation}</td>
+            <td {$style}>{$row->precipitation_probability} %</td>
+            <td {$style}>{$row->uvindex}</td>
+            <td {$style}>{$row->relativehumidity}</td>
+        </tr>";
     $index++;
 }
-
 echo "</tbody></table></body>";
 ?>
