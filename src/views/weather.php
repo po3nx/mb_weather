@@ -313,8 +313,8 @@ echo "<body style=\"font-family: Arial, Helvetica, sans-serif;font-size:11pt;col
         <tr style=\"background-color: #2C8F30; color: white; text-align: center;\">
             <th style=\"padding: 5px; border: 1px solid #ddd;\">Time</th>
             <th style=\"padding: 5px; border: 1px solid #ddd;\">Weather</th>
-            <th style=\"padding: 5px; border: 1px solid #ddd;\">Wind Direction</th>
             <th style=\"padding: 5px; border: 1px solid #ddd;\">Rain Spot</th>
+            <th style=\"padding: 5px; border: 1px solid #ddd;\">Wind Direction</th>
             <th style=\"padding: 5px; border: 1px solid #ddd;\">Wind Speed</th>
             <th style=\"padding: 5px; border: 1px solid #ddd;\">Temperature</th>
             <th style=\"padding: 5px; border: 1px solid #ddd;\">Precipitation</th>
@@ -344,8 +344,8 @@ foreach($this->data as $row){
     echo "<tr>
             <td {$style}>{$date}</td>
             <td {$style}><img src='images/png/".substr("00".$row->pictocode,-2).($row->isdaylight=='1'?"_day":"_night").".png' width='40' alt='{$row->pictocode}'></td>
-            <td {$style}>{$img}</td>
             <td {$style}>{$rainspot}</td>
+            <td {$style}>{$img}</td>
             <td {$style}>{$windspeed}</td>
             <td {$style}>{$temperature} °C</td>
             <td {$style}>{$precipitation}</td>
