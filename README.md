@@ -12,7 +12,7 @@ This project is a PHP application that retrieves weather forecast data from the 
 
 Before you begin, ensure you have met the following requirements:
 
-- PHP 7.4 or higher installed on your machine.
+- PHP 8.1 or higher installed on your machine.
 - Composer installed for managing dependencies.
 - An API key from [Meteoblue](https://www.meteoblue.com/en/weather-api/index/overview).
 
@@ -56,7 +56,7 @@ Follow these steps to get the project up and running on your local machine.
     You can start the PHP built-in web server by running:
 
     ```sh
-    php -S localhost:8000 -t public
+    php -S localhost:8000 
     ```
 
 2. **View the application:**
@@ -82,4 +82,4 @@ Contributions are welcome! Please follow these steps to contribute:
 Please read the Meteoblue documentation at https://docs.meteoblue.com/en/weather-apis/introduction/overview
 
 ## Sample Output
-![image description](public/images/forecast_output.png)
+![image description](images/forecast_output.png)
