@@ -341,7 +341,7 @@ echo "<body>
         <thead>
             <tr><td colspan='25'><div style='font-weight: bold;'>Weather forecast for {$this->lat} {$this->lon}</div></td></tr>
             <tr>
-                <th>Descr</th>";
+                <th></th>";
 
                 foreach ($this->data as $row) {
                     echo "<th>" . date('H:i', strtotime($row->time)) . "</th>";
