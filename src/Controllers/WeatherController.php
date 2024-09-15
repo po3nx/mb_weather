@@ -31,6 +31,34 @@ class WeatherController {
             $response->send('Error Occured');
         }
     }
+    public function checkWeather($request, $response, $service, $app) {
+        try {
+            $lat = $request->param('lat',$_ENV['DEFAULT_LAT']);
+            $lon = $request->param('lon',$_ENV['DEFAULT_LON']);
+            $format = $request->param('format', $_ENV['DEFAULT_FORMAT']);
+            $weather = new WeatherService($this->logger,$lat,$lon,$format);
+            $data = $weather->getWeather();
+            if (is_array($data) && !empty($data)) {
+                $response->json([
+                    'status' => 'success',
+                    'message' => 'Success',
+                    'data' => $data  // Include the weather data in the response
+                ]);
+            } else {
+                $response->json([
+                    'status' => 'empty',
+                    'message' => 'Weather data not found.'
+                ]);
+            }
+        } catch (Exception $error) {
+            $this->logger->error($error->getMessage(), ['exception' => $error]);
+            $response->code(500);
+            $response->json([
+                'status' => 'error',
+                'message' => 'Error Occurred'
+            ]);
+        }
+    }
     public function syncWeather($request, $response, $service, $app) {
         try {
             $lat = $request->param('lat',$_ENV['DEFAULT_LAT']);
