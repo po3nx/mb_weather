@@ -274,7 +274,7 @@
     fill: #2575ba
 }
 table { font-family: Arial, Helvetica, sans-serif; font-size: 10pt; margin: 10px auto; border-collapse: collapse; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
-th, td { padding: 5px 0px; text-align: center; font-size:8pt;}
+th, td { padding: 5px 0px; text-align: center; font-size:8pt; border-right: 1px solid #b4b5c8}
 th { background-color: #2C8F30; color: white; }
 .odd { background-color: #f9f9f9; }
 .even { background-color: #f1f1f1; }

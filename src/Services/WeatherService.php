@@ -37,6 +37,7 @@ class WeatherService {
             $data = Weather::where('lat',$this->lat)
                         ->where('lon',$this->lon)
                         ->whereDate('time',$time)
+                        ->orderBy('time', 'asc')
                         ->get();
             return $data;
         } catch (InvalidArgumentException $error) {
